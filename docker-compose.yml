@@ -1,28 +1,14 @@
 version: '3'
 
 services:
-  docker-firefox:
+  go-proxy-bingai:
     # 镜像名称
-    image: jlesage/docker-firefox
+    image: adams549659584/go-proxy-bingai
     # 容器名称
-    container_name: jlesage  
+    container_name: go-proxy-bingai  
     # 自启动
     restart: unless-stopped
     ports:
-      - 5800:5800
-
-
-#version: '3'
-
-#services:
-  #go-proxy-bingai:
-    # 镜像名称
-    #image: adams549659584/go-proxy-bingai
-    # 容器名称
-    #container_name: go-proxy-bingai  
-    # 自启动
-   # restart: unless-stopped
-    #ports:
       - 8080:8080
     # environment:
     #   - Go_Proxy_BingAI_SOCKS_URL=192.168.0.88:1070
