@@ -1,38 +1,42 @@
-# ==============================================================================
-# Copyright (C) 2021 Intel Corporation
-# SPDX-License-Identifier: Apache-2.0
-# ==============================================================================
-version: "3"
-networks: 
-  ovms-bridge:
-    driver: bridge
-services: 
-  ovms-server:
-    image: jkalapati/ovms-server
-    hostname: ovms-server
-    ports: 
-      - "9000:9000"
-      - "9001:9001"
-    expose: 
-      - "9000"
-    networks: 
-      - ovms-bridge
-    command: [--port=9000, --model_name=face-detection, --model_path=/models, --shape=auto]
-    tty: 
-      true
-      
-  ovms-client: 
-    image: jkalapati/ovms-client
-    environment: 
-      SERVER_NAME: ovms-server
-      GRPC_PORT: 9000
+version: '3'
+
+services:
+  go-proxy-bingai:
+    # 镜像名称
+    image: adams549659584/go-proxy-bingai
+    # 容器名称
+    container_name: go-proxy-bingai  
+    # 自启动
+    restart: unless-stopped
     ports:
-      - "8000:8000"
-    networks: 
-      - ovms-bridge
-    depends_on:
-      - ovms-server
-    links: 
-      - ovms-server
-    tty:
-      true
+      - 8080:8080
+    # environment:
+    #   - Go_Proxy_BingAI_SOCKS_URL=192.168.0.88:1070
+    #   - Go_Proxy_BingAI_SOCKS_USER=xxx
+    #   - Go_Proxy_BingAI_SOCKS_PWD=xxx
+    #   - Go_Proxy_BingAI_USER_TOKEN_1=xxx
+    #   - Go_Proxy_BingAI_USER_TOKEN_2=xxx
+  
+#   go-proxy-bingai:
+#     # 镜像名称
+#     image: adams549659584/go-proxy-bingai
+#     # 容器名称
+#     container_name: go-proxy-bingai
+#     build:
+#       context: ../
+#       dockerfile: docker/Dockerfile      
+#     # 自启动
+#     restart: unless-stopped
+#     # 加入指定网络
+#     networks:
+#       - MyNetwork    
+#     ports:
+#       - 8888:8080
+#     environment:
+#       - Go_Proxy_BingAI_SOCKS_URL=192.168.0.88:1070
+#       # - Go_Proxy_BingAI_SOCKS_USER=xxx
+#       # - Go_Proxy_BingAI_SOCKS_PWD=xxx        
+
+# networks:
+#   MyNetwork:
+#     external: true
